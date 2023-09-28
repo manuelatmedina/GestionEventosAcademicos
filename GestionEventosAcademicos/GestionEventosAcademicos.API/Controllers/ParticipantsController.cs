@@ -32,5 +32,18 @@ namespace GestionEventosAcademicos.API.Controllers
             return Ok(participant);
         }
 
+        //Get Por Paràmetro
+        [HttpGet("{id}")]
+        public async Task<IActionResult> Get(int id)
+        {
+            var participants = await _context.Participants.FirstOrDefaultAsync(x => x.Id
+            == id);
+            if (participants == null)
+            {
+                return NotFound();
+            }
+            return Ok(participants);
+        }
+
     }
 }

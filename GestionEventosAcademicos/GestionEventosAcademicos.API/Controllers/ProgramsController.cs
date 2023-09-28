@@ -30,5 +30,17 @@ namespace GestionEventosAcademicos.API.Controllers
                 await _context.SaveChangesAsync();
             return Ok(program);
         }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> Get(int id)
+        {
+            var programs = await _context.Programs.FirstOrDefaultAsync(x => x.Id== id);
+            if (programs == null)
+            {
+                return NotFound();
+            }
+            return Ok(programs);
+        }
+
     }
 }

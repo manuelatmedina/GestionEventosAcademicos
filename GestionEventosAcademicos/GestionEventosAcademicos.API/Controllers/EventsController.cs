@@ -16,6 +16,7 @@ namespace GestionEventosAcademicos.API.Controllers
             _context = context;
         }
 
+
         [HttpGet]
         public async Task<IActionResult> Get()
         {
@@ -30,5 +31,19 @@ namespace GestionEventosAcademicos.API.Controllers
             await _context.SaveChangesAsync();
             return Ok(@event);
         }
+
+        //Get Por Paràmetro
+        [HttpGet ("{id}")]
+        public async Task<IActionResult> Get(int id)
+        {
+            var events=await _context.Events.FirstOrDefaultAsync(x=>x.Id
+            == id);
+            if (events == null)
+            {
+                return NotFound();
+            }
+            return Ok(events);
+        }
+
     }
 }
