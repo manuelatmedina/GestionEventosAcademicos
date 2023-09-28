@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\GestionEventosAcademicos.Shared\GestionEventosAcademicos.Shared.csproj" />
+    <ProjectReference Include="..\GestionEventosAcademicos.WEB\GestionEventosAcademicos.WEB.csproj" />
   </ItemGroup>
 
 </Project>

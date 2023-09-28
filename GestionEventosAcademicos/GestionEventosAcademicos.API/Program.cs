@@ -1,4 +1,5 @@
 using GestionEventosAcademicos.API.Data;
+using GestionEventosAcademicos.WEB.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,6 +18,8 @@ builder.Services.AddDbContext<DataContext>(x=>x.UseSqlServer("name=DefaultConnec
 builder.Services.AddScoped(sp=>new HttpClient { BaseAddress=new Uri 
     ("https://localhost:8000")});
 
+builder.Services.AddScoped<IRepository,Repository>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -32,4 +35,9 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+app.UseCors(x => x
+    .AllowAnyMethod()
+    .AllowAnyHeader()
+    .SetIsOriginAllowed(origin => true)
+    .AllowCredentials());
 app.Run();
