@@ -33,10 +33,10 @@ namespace GestionEventosAcademicos.API.Controllers
         }
 
         //Get Por Paràmetro
-        [HttpGet ("{id}")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
-            var events=await _context.Events.FirstOrDefaultAsync(x=>x.Id
+            var events = await _context.Events.FirstOrDefaultAsync(x => x.Id
             == id);
             if (events == null)
             {
@@ -45,5 +45,49 @@ namespace GestionEventosAcademicos.API.Controllers
             return Ok(events);
         }
 
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Put(int id, Event @event)
+        {
+            if (id != @event.Id)
+            {
+                return BadRequest();
+            }
+
+            _context.Entry(@event).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!_context.Events.Any(e => e.Id == id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var @event = await _context.Events.FindAsync(id);
+
+            if (@event == null)
+            {
+                return NotFound();
+            }
+
+            _context.Events.Remove(@event);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
     }
 }

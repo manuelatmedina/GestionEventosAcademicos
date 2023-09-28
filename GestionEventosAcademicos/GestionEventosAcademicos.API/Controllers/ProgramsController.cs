@@ -42,5 +42,50 @@ namespace GestionEventosAcademicos.API.Controllers
             return Ok(programs);
         }
 
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Put(int id, Event @event)
+        {
+            if (id != @event.Id)
+            {
+                return BadRequest();
+            }
+
+            _context.Entry(@event).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!_context.Programs.Any(e => e.Id == id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var @event = await _context.Programs.FindAsync(id);
+
+            if (@event == null)
+            {
+                return NotFound();
+            }
+
+            _context.Programs.Remove(@event);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
+
     }
 }
