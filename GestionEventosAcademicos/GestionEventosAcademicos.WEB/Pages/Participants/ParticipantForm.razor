@@ -1,0 +1,43 @@
+﻿@using GestionEventosAcademicos.Shared.Entities;
+<EditForm Model="Participant" OnValidSubmit="OnSubmit">
+    <DataAnnotationsValidator />
+    <div class="mb-3">
+        <label>Participante:</label>
+        <div>
+            <InputText class="form-control" @bind-Value="@Participant.Name" />
+            <ValidationMessage For="@(() => Participant.Name)" />
+        </div>
+        <label>Afiliaciòn Institucional:</label>
+        <div>
+            <InputText class="form-control" @bind-Value="@Participant.Affilliation" />
+            <ValidationMessage For="@(() => Participant.Affilliation)" />
+        </div>
+        <label>Àrea de Interès:</label>
+        <div>
+            <InputText class="form-control" @bind-Value="@Participant.Area" />
+            <ValidationMessage For="@(() => Participant.Area)" />
+        </div>
+        <label>Tipo de Participaciòn:</label>
+        <div>
+            <InputText class="form-control" @bind-Value="@Participant.Type" />
+            <ValidationMessage For="@(() => Participant.Type)" />
+        </div>
+    </div>
+
+    <button class="btn btn-primary" type="submit">Guardar Cambios</button>
+    <button class="btn btn-success" @onclick="ReturnAction">Regresar</button>
+</EditForm>
+
+@code {
+    [EditorRequired]
+    [Parameter]
+    public Participant Participant { get; set; } = null!;
+
+    [EditorRequired]
+    [Parameter]
+    public EventCallback OnSubmit { get; set; }
+
+    [EditorRequired]
+    [Parameter]
+    public EventCallback ReturnAction { get; set; }
+}

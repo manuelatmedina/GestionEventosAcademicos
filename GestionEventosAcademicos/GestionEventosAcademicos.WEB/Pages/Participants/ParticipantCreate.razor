@@ -1,0 +1,34 @@
+﻿@page "/participants/create"
+@using GestionEventosAcademicos.Shared.Entities;
+@using GestionEventosAcademicos.WEB.Repositories;
+@inject IRepository repository
+@inject NavigationManager navigationManager
+
+<h3>Crear Participante</h3>
+
+
+<ParticipantForm @ref="participantForm" Participant="participant" OnSubmit="Create" ReturnAction="Return" />
+@code {
+    private Participant participant = new();
+    private ParticipantForm? participantForm;
+
+    private async Task Create()
+    {
+        var responseHttp = await repository.Post("/api/participants", participant);
+        if (responseHttp.Error)
+        {
+            
+            return;
+        }
+
+
+
+        navigationManager.NavigateTo("/participant");
+    }
+
+    private void Return()
+    {
+        navigationManager.NavigateTo("/participant");
+    }
+}
+

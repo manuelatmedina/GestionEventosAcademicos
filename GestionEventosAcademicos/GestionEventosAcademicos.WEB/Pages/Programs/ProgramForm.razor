@@ -1,0 +1,28 @@
+﻿@using GestionEventosAcademicos.Shared.Entities;
+<EditForm Model="Program" OnValidSubmit="OnSubmit">
+    <DataAnnotationsValidator />
+    <div class="mb-3">
+        <label>Participante:</label>
+        <div>
+            <InputText class="form-control" @bind-Value="@Program.Schedule" />
+            <ValidationMessage For="@(() => Program.Schedule)" />
+        </div>
+    </div>
+
+    <button class="btn btn-primary" type="submit">Guardar Cambios</button>
+    <button class="btn btn-success" @onclick="ReturnAction">Regresar</button>
+</EditForm>
+
+@code {
+    [EditorRequired]
+    [Parameter]
+    public Program Program { get; set; } = null!;
+
+    [EditorRequired]
+    [Parameter]
+    public EventCallback OnSubmit { get; set; }
+
+    [EditorRequired]
+    [Parameter]
+    public EventCallback ReturnAction { get; set; }
+}
