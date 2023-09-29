@@ -1,0 +1,55 @@
+﻿@page "/events"
+@using GestionEventosAcademicos.Shared.Entities;
+@using GestionEventosAcademicos.WEB.Repositories;
+
+@inject IRepository repository
+
+<h3>Eventos Acadèmicos</h3>
+
+<div class="mb-3">
+    <a class="btn btn-primary" href="/events/create">Nuevo Evento Acadèmico</a>
+</div>
+
+<GenericList MyList="Events">
+
+    <Body>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Evento</th>
+                    <th></th>
+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var event_ in Events!)
+                {
+                    <tr>
+                        <td>
+                            @event_.Name
+                        </td>
+                        <td>
+                            <a class="btn btn-warning">Editar</a>
+                            <button class="btn btn-danger">Borrar</button>
+                        </td>
+
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </Body>
+
+</GenericList>
+
+@code {
+    public List<Event>? Events { get; set; }
+
+    protected async override Task OnInitializedAsync()
+    {
+        var responseHppt = await repository.Get<List<Event>>("/api/events");
+
+        Events = responseHppt.Response!;
+    }
+}
+

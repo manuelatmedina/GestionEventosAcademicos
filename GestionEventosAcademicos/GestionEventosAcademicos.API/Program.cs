@@ -15,8 +15,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<DataContext>(x=>x.UseSqlServer("name=DefaultConnection"));
 
 // Inyecciòn de dependencias a la WEB
-builder.Services.AddScoped(sp=>new HttpClient { BaseAddress=new Uri 
-    ("https://localhost:8000")});
+builder.Services.AddScoped(sp=>new HttpClient { BaseAddress=new Uri ("https://localhost:8000")});
 
 builder.Services.AddScoped<IRepository,Repository>();
 
@@ -35,9 +34,12 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+app.MapControllers();
+
 app.UseCors(x => x
     .AllowAnyMethod()
     .AllowAnyHeader()
     .SetIsOriginAllowed(origin => true)
     .AllowCredentials());
+
 app.Run();

@@ -1,0 +1,55 @@
+﻿@page "/programs"
+@using GestionEventosAcademicos.Shared.Entities;
+@using GestionEventosAcademicos.WEB.Repositories;
+
+@inject IRepository repository
+
+<h3>Programa del Evento</h3>
+
+<div class="mb-3">
+    <a class="btn btn-primary" href="/programs/create">Nuevo Programa</a>
+</div>
+
+<GenericList MyList="Programs">
+
+    <Body>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Programa</th>
+                    <th></th>
+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var program in Programs!)
+                {
+                    <tr>
+                        <td>
+                            @program.Schedule @program.Topic
+                        </td>
+                        <td>
+                            <a class="btn btn-warning">Editar</a>
+                            <button class="btn btn-danger">Borrar</button>
+                        </td>
+
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </Body>
+
+</GenericList>
+
+@code {
+    public List<Program>? Programs { get; set; }
+
+    protected async override Task OnInitializedAsync()
+    {
+        var responseHppt = await repository.Get<List<Program>>("/api/programs");
+
+        Programs = responseHppt.Response!;
+    }
+}
+

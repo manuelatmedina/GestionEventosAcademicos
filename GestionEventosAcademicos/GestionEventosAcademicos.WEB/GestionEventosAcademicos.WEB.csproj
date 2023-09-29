@@ -13,6 +13,7 @@
     <ExternalConsole>true</ExternalConsole>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="Ensure.That" Version="10.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="7.0.11" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="7.0.11" PrivateAssets="all" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.11" />
@@ -21,6 +22,9 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GestionEventosAcademicos.Shared\GestionEventosAcademicos.Shared.csproj" />
   </ItemGroup>
 
 </Project>
